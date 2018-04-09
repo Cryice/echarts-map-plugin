@@ -35,10 +35,14 @@ function loadJSON() {
             }
         }
         function v(f) {
-        	console.log(JSON.stringfy(f));
+            // 解决输出文件太大，浏览器停止响应的问题，存储在localStorage
+        	//console.log(JSON.stringify(f));
+            var geojson  = JSON.stringify(f);
+            localStorage.setItem("geojson", geojson);
+
             f.UTF8Encoding = !0;
             var c = f.features;
-            return c ? (c.forEach(function(p) {
+            var v = c ? (c.forEach(function(p) {
                 var g = p.geometry.encodeOffsets = [], q = p.geometry.coordinates;
                 "Polygon" === p.geometry.type ? q.forEach(function(b, B) {
                     q[B] = u(b, g[B] = []);
@@ -48,6 +52,8 @@ function loadJSON() {
                     });
                 });
             }), f) : void 0;
+
+            return v;
         }
         function u(q, p) {
             var C, B, F = "", E = t(q[0][0]), D = t(q[0][1]);
